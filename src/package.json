@@ -9,6 +9,7 @@
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
+    "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
@@ -16,14 +17,17 @@
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "budo": "^8.3.0",
     "envify": "^3.4.0",
     "redux-devtools": "^3.3.1",
     "uglifyify": "^3.0.1",
     "watchify": "^3.7.0"
   },
   "scripts": {
-    "test": "test.js",
-    "start": "watchify --extension=js -o bundle.js index.js & python -m SimpleHTTPServer"
+    "start": "budo index.js:bundle.js --live -- --extension=js",
+    "build": "cross-env NODE_ENV=production browserify --extension=js -g [ uglifyify ] -o bundle.js index.js",
+    "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register --require ./test/setup.js",
+    "test:watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -31,8 +35,18 @@
   },
   "browserify": {
     "transform": [
-      [ "babelify", {"presets": ["es2015", "react"]} ],
-      [ "envify" ]
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015",
+            "react"
+          ]
+        }
+      ],
+      [
+        "envify"
+      ]
     ]
   },
   "keywords": [
