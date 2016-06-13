@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "test.js",
-    "start": "watchify --extension=js -g [ uglifyify ] -o bundle.js index.js & python -m SimpleHTTPServer"
+    "start": "watchify --extension=js -o bundle.js index.js & python -m SimpleHTTPServer"
   },
   "repository": {
     "type": "git",

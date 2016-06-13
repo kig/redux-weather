@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { selectLocation, fetchWeatherIfNeeded, invalidateLocation } from '../actions/actions'
-import Picker from '../components/Picker'
+import { selectLocation, fetchWeatherIfNeeded, invalidateLocation, goToMyLocation } from '../actions/actions'
 import Weather from '../components/Weather'
 
 class AsyncApp extends Component {
@@ -27,6 +26,11 @@ class AsyncApp extends Component {
     this.props.dispatch(selectLocation(nextLocation))
   }
 
+  handleGoToMyLocation() {
+    console.log(this)
+    this.props.dispatch(goToMyLocation())
+  }
+
   handleRefreshClick(e) {
     e.preventDefault()
 
@@ -36,12 +40,9 @@ class AsyncApp extends Component {
   }
 
   render() {
-    const { selectedLocation, weather, isFetching, lastUpdated } = this.props
+    const { selectedLocation, weather, locationChanged, isFetching, lastUpdated, myLocation } = this.props
     return (
       <div>
-        <Picker value={selectedLocation}
-                onChange={this.handleChange}
-                options={[ 'London', 'Paris' ]} />
         <p>
           {lastUpdated &&
             <span>
@@ -63,9 +64,15 @@ class AsyncApp extends Component {
           <h2>Empty.</h2>
         }
         {weather &&
-          <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <Weather weather={weather} />
-          </div>
+          <Weather
+            weather={weather}
+            location={selectedLocation}
+            locationChanged={locationChanged}
+            locating={myLocation.isFetching}
+            myLocation={myLocation.location}
+            onGoToMyLocation={this.handleGoToMyLocation.bind(this)}
+            onChange={this.handleChange}
+          />
         }
       </div>
     )
@@ -75,26 +82,32 @@ class AsyncApp extends Component {
 AsyncApp.propTypes = {
   selectedLocation: PropTypes.string.isRequired,
   weather: PropTypes.object,
+  locationChanged: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
+  myLocation: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
-  const { selectedLocation, weatherByLocation } = state
+  const { selectedLocation, weatherByLocation, myLocation } = state
   const {
     isFetching,
     lastUpdated,
-    weather: weather
+    locationChanged,
+    weather
   } = weatherByLocation[selectedLocation] || {
+    locationChanged: true,
     isFetching: true
   }
 
   return {
     selectedLocation,
+    locationChanged,
     weather,
     isFetching,
-    lastUpdated
+    lastUpdated,
+    myLocation
   }
 }
 

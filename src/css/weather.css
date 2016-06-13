@@ -1,0 +1,124 @@
+body {
+	color: white;
+	background: #89A;
+	font-family: 'Roboto Condensed', "roboto-condensed", Helvetica Neue, Segoe UI, sans-serif;
+	font-weight: 100;
+	font-size: 15px;
+}
+
+#weather-data {
+	color: white;
+	position: absolute;
+	top: 38px;
+	right: 39px;
+	font-family: 'Roboto Condensed', "roboto-condensed", Helvetica Neue, Segoe UI, sans-serif;
+	font-weight: 100;
+	font-size: 15px;
+	text-align: right;
+	box-sizing: border-box;
+	transition: 0.5s;
+	/*text-shadow: 0px 0px 30px rgba(0,0,0,0.2);*/
+	z-index: 15;
+	opacity: 0.8;
+}
+
+#weather-data.fade-in {
+	animation: fade-in 0.5s both;
+}
+
+#weather-data.fade-out {
+	animation: fade-out 0.5s both;
+}
+
+@-webkit-keyframes fade-in {
+	0% { opacity: 0; }
+	100% { opacity: 0.8; }
+}
+
+@-webkit-keyframes fade-out {
+	0% { opacity: 0.8; }
+	100% { opacity: 0; }
+}
+
+
+#city {
+	text-transform: uppercase;
+	background: transparent;
+	border: 0;
+	padding: 0;
+	color: white;
+	font-family: 'Roboto Condensed', "roboto-condensed", Helvetica Neue, Segoe UI, sans-serif;
+	font-weight: 100;
+	font-size: 15px;
+	text-align: right;
+	transition: 0.5s;
+	outline: 0;
+	border-bottom: 1px solid rgba(255,255,255, 0);
+	margin-bottom: -1px;
+	width: 100%;
+}
+
+#city:hover {
+	border-bottom: 1px solid rgba(255,255,255, 0.5);
+}
+#city::selection {
+	background: #4489f1;
+	color: white;
+}
+
+#my-location {
+	position: absolute;
+	right: -22px;
+	top: 1px;
+	transition: 0.5s;
+	opacity: 0.5;
+	cursor: pointer;
+}
+#my-location:hover,
+#my-location.current-location
+{
+	opacity: 1;
+}
+#my-location.locating {
+	transform: scale(0.01);
+}
+
+#my-location rect,
+#my-location #center
+{
+	fill: white;
+}
+
+#my-location #surround
+{
+	stroke: white;
+}
+
+#temperature {
+	font-size: 72px;
+	font-family: 'Proxima Nova', "proxima-nova", Helvetica Neue, Segoe UI, sans-serif;
+	font-weight: bold;
+	margin-bottom: -17px;
+	margin-top: -3px;
+}
+
+#wind-data {
+	margin-top: 6px;
+	margin-bottom: 15px;
+}
+
+#wind-direction {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 3px;
+}
+
+hr {
+	height: 1px;
+	border: 0;
+	background: rgba(255,255,255, 0.5);
+	margin-top: 11px;
+	margin-bottom: 11px;
+	margin-left: 2px;
+	margin-right: 2px;
+}

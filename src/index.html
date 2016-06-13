@@ -1,9 +1,17 @@
 <html>
 	<head>
-		<title>Simplest redux + react example</title>
+		<meta charset="utf8">
+		<title>Redux OpenWeatherMap API demo</title>
+		<link rel="stylesheet" href="css/weather.css">
 	</head>
 	<body>
 		<div id="root" />
+		<script>
+			function setGeoIPLocation(loc) {
+				window.geoIPLocation = loc.latitude + "," + loc.longitude;
+			}
+		</script>
+		<script src="https://freegeoip.net/json/?callback=setGeoIPLocation"></script>
 		<script type="text/javascript" src="bundle.js"></script>
 	</body>
 </html>
