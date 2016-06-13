@@ -22,7 +22,13 @@ export default class Weather extends Component {
 
   handleGoToMyLocation(event) {
     event.preventDefault();
-    this.props.onGoToMyLocation();
+    setTimeout((function() {
+      this.props.onGoToMyLocation();
+    }).bind(this), 500);
+    this.setState({
+      locating: true,
+      fade: true
+    })
   }
 
   render() {
@@ -40,7 +46,7 @@ export default class Weather extends Component {
           </form>
           <span id="my-location" 
             onClick={e => this.handleGoToMyLocation(e)} 
-            className={ (location.toUpperCase() === myLocation.toUpperCase() ? 'current-location' : '') + (locating ? ' locating' : '') }
+            className={ (location.toUpperCase() === myLocation.toUpperCase() ? 'current-location' : '') + (this.state.locating || locating ? ' locating' : '') }
           >
             <svg width="15" height="15">
               <circle id="surround" fill="none" stroke="#000000" cx="7.6" cy="7.5" r="5.4"/>
